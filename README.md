@@ -121,6 +121,21 @@ await writeFile('rechnung.pdf', pdf)
 - Every result records `rulesetVersion`, so a verdict can always be traced to
   the rules in force when it was made.
 
+### What a finding's code means
+
+Every finding carries a rule code — `BR-DE-15`, `BR-CO-16`,
+`PEPPOL-EN16931-R010` — and the `text` beside it is the rule as the norm words
+it, which states the requirement and not why your document broke it.
+
+[**normapi-de/xrechnung-rules-explained**](https://github.com/normapi-de/xrechnung-rules-explained)
+is an open reference for those codes: 132 rules in German and English, each
+with the mapping habit that actually causes it and a wrong/right XML fragment.
+Data under CC BY 4.0, so you can ship it inside your own error messages.
+
+It also documents things the rule list does not — four rules that compile to
+`true()` and can never fire, and the pairs of codes that are one check under
+two names, so a single missing field reports twice.
+
 ## Errors
 
 An **invalid invoice is not an error** — it is a successful validation with
