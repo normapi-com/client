@@ -20,6 +20,7 @@ import { readFile } from 'node:fs/promises'
 
 const result = await validate(await readFile('invoice.xml'), {
   documentName: 'invoice.xml',
+  language: 'de', // explanations in German; English when omitted
 })
 
 if (result.acceptable) {
@@ -27,6 +28,9 @@ if (result.acceptable) {
 } else {
   for (const finding of result.findings) {
     console.log(`${finding.severity} ${finding.code}: ${finding.text}`)
+    if (finding.explanation !== null) {
+      console.log(`  fix: ${finding.explanation.fix}`)
+    }
   }
 }
 ```
@@ -120,6 +124,11 @@ await writeFile('rechnung.pdf', pdf)
   to judge, not a judgement.
 - Every result records `rulesetVersion`, so a verdict can always be traced to
   the rules in force when it was made.
+- `text` is the rule set's own wording. `explanation` says the same in plain
+  language — `meaning`, `cause`, `fix`, and a `url` to where the rule is
+  explained on normapi.de — in German or English (`language: 'de' | 'en'`,
+  English by default). Every business rule is explained; `explanation` is
+  `null` only on schema findings.
 
 ### What a finding's code means
 

@@ -23,6 +23,24 @@ export interface Finding {
   readonly column: number | null
   /** The assertion that failed; null for schema findings. */
   readonly test: string | null
+  /**
+   * The rule in plain language, in the language the client asked for (see
+   * {@link ClientOptions.language}). Every business rule is explained; null
+   * means a schema finding, or a deployment from before explanations existed.
+   */
+  readonly explanation: Explanation | null
+}
+
+/** What a rule requires, why it typically fires, and how to fix it. */
+export interface Explanation {
+  /** What the rule actually requires, in ordinary language. */
+  readonly meaning: string
+  /** Why an invoice typically trips it. */
+  readonly cause: string
+  /** What to change to make it pass. */
+  readonly fix: string
+  /** The page with the full explanation and an XML example. */
+  readonly url: string
 }
 
 export interface ValidationResult {
@@ -245,6 +263,12 @@ export interface ClientOptions {
   readonly baseUrl?: string
   /** Custom fetch, e.g. for proxies or instrumentation. Defaults to global fetch. */
   readonly fetch?: typeof fetch
+  /**
+   * The language of the findings' explanations, sent as Accept-Language.
+   * The service answers in English when none is given. The rule set's own
+   * `text` is never translated.
+   */
+  readonly language?: 'de' | 'en'
 }
 
 const PUBLIC_BASE_URL = 'https://api.normapi.de'
@@ -252,10 +276,21 @@ const PUBLIC_BASE_URL = 'https://api.normapi.de'
 export class Normapi {
   private readonly baseUrl: string
   private readonly fetchImpl: typeof fetch
+  private readonly language: 'de' | 'en' | undefined
 
   constructor(options: ClientOptions = {}) {
     this.baseUrl = (options.baseUrl ?? PUBLIC_BASE_URL).replace(/\/+$/, '')
     this.fetchImpl = options.fetch ?? fetch
+    this.language = options.language
+  }
+
+  /** Request headers, with the explanation language when one is configured. */
+  private headers(contentType: string): Record<string, string> {
+    const headers: Record<string, string> = { 'Content-Type': contentType }
+    if (this.language !== undefined) {
+      headers['Accept-Language'] = this.language
+    }
+    return headers
   }
 
   /**
@@ -273,7 +308,7 @@ export class Normapi {
     document: string | Uint8Array | ArrayBuffer,
     options: ValidateOptions = {},
   ): Promise<ValidationResult> {
-    const headers: Record<string, string> = { 'Content-Type': 'application/xml' }
+    const headers = this.headers('application/xml')
     if (options.documentName !== undefined) {
       headers['X-Document-Name'] = options.documentName
     }
@@ -317,7 +352,7 @@ export class Normapi {
     const syntax = options.syntax === undefined ? '' : `?syntax=${options.syntax}`
     const response = await this.fetchImpl(`${this.baseUrl}/v1/invoices${syntax}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.headers('application/json'),
       body: JSON.stringify(invoice),
       signal: options.signal ?? null,
     })
@@ -345,7 +380,7 @@ export class Normapi {
   ): Promise<GeneratedInvoicePdf> {
     const response = await this.fetchImpl(`${this.baseUrl}/v1/invoices?syntax=zugferd`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: this.headers('application/json'),
       body: JSON.stringify(invoice),
       signal: options.signal ?? null,
     })
@@ -388,12 +423,11 @@ export async function generateInvoicePdf(
 }
 
 function clientOptionsOf(options: ClientOptions): ClientOptions {
-  return options.fetch === undefined
-    ? { ...(options.baseUrl === undefined ? {} : { baseUrl: options.baseUrl }) }
-    : {
-        fetch: options.fetch,
-        ...(options.baseUrl === undefined ? {} : { baseUrl: options.baseUrl }),
-      }
+  return {
+    ...(options.fetch === undefined ? {} : { fetch: options.fetch }),
+    ...(options.baseUrl === undefined ? {} : { baseUrl: options.baseUrl }),
+    ...(options.language === undefined ? {} : { language: options.language }),
+  }
 }
 
 function toBody(document: string | Uint8Array | ArrayBuffer): string | Uint8Array<ArrayBuffer> {
@@ -501,15 +535,50 @@ function parseFinding(value: unknown): Finding | null {
   const line = intOrNull(value['line'])
   const column = intOrNull(value['column'])
   const test = stringOrNull(value['test'])
+  const explanation = parseExplanation(value['explanation'])
   if (
     location === undefined ||
     line === undefined ||
     column === undefined ||
-    test === undefined
+    test === undefined ||
+    explanation === undefined
   ) {
     return null
   }
-  return { code, severity, text, origin, location, line, column, test }
+  return { code, severity, text, origin, location, line, column, test, explanation }
+}
+
+/**
+ * Absent and null both mean "not explained": a deployment from before
+ * explanations existed simply does not send the field. Anything else must be
+ * a complete explanation whose link is an https page — it ends up in markup.
+ */
+function parseExplanation(value: unknown): Explanation | null | undefined {
+  if (value === undefined || value === null) {
+    return null
+  }
+  if (!isRecord(value)) {
+    return undefined
+  }
+  const { meaning, cause, fix, url } = value
+  if (
+    typeof meaning !== 'string' ||
+    typeof cause !== 'string' ||
+    typeof fix !== 'string' ||
+    typeof url !== 'string' ||
+    !isHttpsUrl(url)
+  ) {
+    return undefined
+  }
+  return { meaning, cause, fix, url }
+}
+
+function isHttpsUrl(value: string): boolean {
+  try {
+    return new URL(value).protocol === 'https:'
+  } catch {
+    return false
+  }
 }
 
 function parseValidationResult(value: unknown): ValidationResult | null {
