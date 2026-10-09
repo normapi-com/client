@@ -130,6 +130,19 @@ export interface ValidateOptions {
   readonly signal?: AbortSignal
 }
 
+export interface ExplainRuleOptions {
+  readonly signal?: AbortSignal
+}
+
+/** One rule, explained — what {@link Normapi.explainRule} resolves to. */
+export interface RuleInfo {
+  /** The code as the rule set spells it, e.g. `BR-DE-23-a`. */
+  readonly code: string
+  /** The language the explanation is written in. */
+  readonly language: 'de' | 'en'
+  readonly explanation: Explanation
+}
+
 export interface GenerateOptions {
   /** Output syntax: UBL (default) or UN/CEFACT CII. */
   readonly syntax?: 'ubl' | 'cii'
@@ -261,6 +274,12 @@ export interface GeneratedInvoicePdf {
 export interface ClientOptions {
   /** Defaults to the public service. Point at your own deployment to override. */
   readonly baseUrl?: string
+  /**
+   * Your NormAPI key (`nk_live_…`), sent as a Bearer token. Generation needs
+   * one; validation and rule lookups work without it under anonymous limits,
+   * and with it under your key's.
+   */
+  readonly apiKey?: string
   /** Custom fetch, e.g. for proxies or instrumentation. Defaults to global fetch. */
   readonly fetch?: typeof fetch
   /**
@@ -277,20 +296,58 @@ export class Normapi {
   private readonly baseUrl: string
   private readonly fetchImpl: typeof fetch
   private readonly language: 'de' | 'en' | undefined
+  private readonly apiKey: string | undefined
 
   constructor(options: ClientOptions = {}) {
     this.baseUrl = (options.baseUrl ?? PUBLIC_BASE_URL).replace(/\/+$/, '')
     this.fetchImpl = options.fetch ?? fetch
     this.language = options.language
+    this.apiKey = options.apiKey
   }
 
-  /** Request headers, with the explanation language when one is configured. */
-  private headers(contentType: string): Record<string, string> {
-    const headers: Record<string, string> = { 'Content-Type': contentType }
+  /** Request headers, with the explanation language and key when configured. */
+  private headers(contentType?: string): Record<string, string> {
+    const headers: Record<string, string> = {}
+    if (contentType !== undefined) {
+      headers['Content-Type'] = contentType
+    }
     if (this.language !== undefined) {
       headers['Accept-Language'] = this.language
     }
+    if (this.apiKey !== undefined && this.apiKey !== '') {
+      headers['Authorization'] = `Bearer ${this.apiKey}`
+    }
     return headers
+  }
+
+  /**
+   * Explain one rule by its code — the same text a finding carries, for a
+   * code you already have: from a log, from another validator's report.
+   *
+   * The code is matched without regard to case; the result names it as the
+   * rule set spells it. Resolves to null when no rule by that code is
+   * explained — schema findings (`cvc-*`) never are.
+   */
+  async explainRule(code: string, options: ExplainRuleOptions = {}): Promise<RuleInfo | null> {
+    const response = await this.fetchImpl(
+      `${this.baseUrl}/v1/rules/${encodeURIComponent(code.trim())}`,
+      { method: 'GET', headers: this.headers(), signal: options.signal ?? null },
+    )
+
+    const body: unknown = await response.json().catch(() => null)
+
+    if (response.status === 404) {
+      return null
+    }
+    if (!response.ok) {
+      throw errorFor(response, body)
+    }
+
+    const info = parseRuleInfo(body)
+    if (info === null) {
+      throw new NormapiError('unexpected response shape from the rules service', response.status, '')
+    }
+    return info
   }
 
   /**
@@ -407,6 +464,14 @@ export async function validate(
 }
 
 /** One-shot convenience against the public service. */
+export async function explainRule(
+  code: string,
+  options: ExplainRuleOptions & ClientOptions = {},
+): Promise<RuleInfo | null> {
+  return new Normapi(clientOptionsOf(options)).explainRule(code, options)
+}
+
+/** One-shot convenience against the public service. */
 export async function generateInvoice(
   invoice: InvoiceInput,
   options: GenerateOptions & ClientOptions = {},
@@ -427,6 +492,7 @@ function clientOptionsOf(options: ClientOptions): ClientOptions {
     ...(options.fetch === undefined ? {} : { fetch: options.fetch }),
     ...(options.baseUrl === undefined ? {} : { baseUrl: options.baseUrl }),
     ...(options.language === undefined ? {} : { language: options.language }),
+    ...(options.apiKey === undefined ? {} : { apiKey: options.apiKey }),
   }
 }
 
@@ -579,6 +645,21 @@ function isHttpsUrl(value: string): boolean {
   } catch {
     return false
   }
+}
+
+function parseRuleInfo(value: unknown): RuleInfo | null {
+  if (!isRecord(value)) {
+    return null
+  }
+  const { code, language } = value
+  if (typeof code !== 'string' || (language !== 'de' && language !== 'en')) {
+    return null
+  }
+  const explanation = parseExplanation(value['explanation'])
+  if (explanation === null || explanation === undefined) {
+    return null
+  }
+  return { code, language, explanation }
 }
 
 function parseValidationResult(value: unknown): ValidationResult | null {

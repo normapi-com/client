@@ -73,7 +73,7 @@ try {
     lines: [
       { name: 'Softwarelizenz', quantity: 3, unit: 'C62', unitPrice: '199.00', vatCategory: 'S', vatRate: 19 },
     ],
-  })
+  }, { apiKey: process.env.NORMAPI_API_KEY })
   await writeFile('rechnung.xml', xml)
   console.log(`generated — ${scenario}, rules ${rulesetVersion}`)
 } catch (error) {
@@ -102,7 +102,9 @@ without e-invoicing software.
 import { generateInvoicePdf } from '@normapi/client'
 import { writeFile } from 'node:fs/promises'
 
-const { pdf, scenario } = await generateInvoicePdf(invoiceData)
+const { pdf, scenario } = await generateInvoicePdf(invoiceData, {
+  apiKey: process.env.NORMAPI_API_KEY,
+})
 await writeFile('rechnung.pdf', pdf)
 ```
 
@@ -144,6 +146,22 @@ Data under CC BY 4.0, so you can ship it inside your own error messages.
 It also documents things the rule list does not — four rules that compile to
 `true()` and can never fire, and the pairs of codes that are one check under
 two names, so a single missing field reports twice.
+
+### Explain a code you already have
+
+A code from a log, or from another validator's report, gets the same
+explanation a finding carries:
+
+```ts
+import { explainRule } from '@normapi/client'
+
+const rule = await explainRule('br-de-15', { language: 'de' })
+// { code: 'BR-DE-15', language: 'de', explanation: { meaning, cause, fix, url } }
+```
+
+Case does not matter; the result spells the code as the rule set does. It
+resolves to `null` for a code no rule has — schema findings (`cvc-*`) carry no
+explanation.
 
 ## Errors
 
