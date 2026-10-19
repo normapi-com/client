@@ -138,7 +138,7 @@ Every finding carries a rule code — `BR-DE-15`, `BR-CO-16`,
 `PEPPOL-EN16931-R010` — and the `text` beside it is the rule as the norm words
 it, which states the requirement and not why your document broke it.
 
-[**normapi-de/xrechnung-rules-explained**](https://github.com/normapi-de/xrechnung-rules-explained)
+[**normapi-com/xrechnung-rules-explained**](https://github.com/normapi-com/xrechnung-rules-explained)
 is an open reference for those codes: 132 rules in German and English, each
 with the mapping habit that actually causes it and a wrong/right XML fragment.
 Data under CC BY 4.0, so you can ship it inside your own error messages.
@@ -219,7 +219,7 @@ no card), make a key, and pass it as `apiKey`.
 ## Issues and questions
 
 Bugs and questions belong in
-[GitHub issues](https://github.com/normapi-de/client/issues) — that way the answer
+[GitHub issues](https://github.com/normapi-com/client/issues) — that way the answer
 helps whoever hits it next. Anything about your account or invoice data instead
 goes to kontakt@normapi.de.
 

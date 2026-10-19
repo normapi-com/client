@@ -1,6 +1,6 @@
 {
   "name": "@normapi/client",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Validate German e-invoices (XRechnung UBL/CII, ZUGFeRD/Factur-X PDF) against the official KoSIT rule set via the NormAPI service.",
   "keywords": [
     "xrechnung",
@@ -16,10 +16,10 @@
   "homepage": "https://normapi.de/en/docs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/normapi-de/client.git"
+    "url": "git+https://github.com/normapi-com/client.git"
   },
   "bugs": {
-    "url": "https://github.com/normapi-de/client/issues",
+    "url": "https://github.com/normapi-com/client/issues",
     "email": "kontakt@normapi.de"
   },
   "license": "MIT",
