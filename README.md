@@ -195,6 +195,10 @@ ZUGFeRD EN 16931 hybrid for a business recipient.
   to judge, not a judgement.
 - Every result records `rulesetVersion`, so a verdict can always be traced to
   the rules in force when it was made.
+- A generated invoice's `ignoredFields` lists what the data carried that no
+  part of an invoice knows — `lines[0].articleNumber` sent for
+  `sellerItemId` — and so went into no document. Empty when every field was
+  used.
 - `text` is the rule set's own wording. `explanation` says the same in plain
   language — `meaning`, `cause`, `fix`, and a `url` to where the rule is
   explained on normapi.de — in German or English (`language: 'de' | 'en'`,

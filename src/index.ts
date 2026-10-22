@@ -391,7 +391,7 @@ export interface LineInput {
   readonly quantity: number | string
   /** BT-130, UN/ECE Rec 20 — "C62" piece, "HUR" hour … */
   readonly unit: string
-  /** BT-146, net, up to four decimals. */
+  /** BT-146, net, up to four decimals — per `baseQuantity` units when one is given. */
   readonly unitPrice: number | string
   /** BT-151, UNTDID 5305. */
   readonly vatCategory: 'S' | 'Z' | 'E' | 'AE' | 'K' | 'G' | 'O' | 'L' | 'M'
@@ -407,6 +407,20 @@ export interface LineInput {
   readonly period?: PeriodInput
   /** BT-132, the line of the buyer's purchase order this one bills. */
   readonly orderLineReference?: string
+  /** BT-127, free text on this line. */
+  readonly note?: string
+  /** BT-155, the seller's article number. */
+  readonly sellerItemId?: string
+  /** BT-156, the buyer's own number for the article. */
+  readonly buyerItemId?: string
+  /** BT-157, e.g. the GTIN (EAN) on the packaging. */
+  readonly standardItemId?: string
+  /** BT-157-1, the ISO 6523 ICD of `standardItemId`; "0160" (GTIN) when absent. */
+  readonly standardItemIdScheme?: string
+  /** BT-148, the price before the discount, at least `unitPrice`; BT-147 is the difference. */
+  readonly listPrice?: number | string
+  /** BT-149, how many units `unitPrice` and `listPrice` are for — 100 for a price per hundred. */
+  readonly baseQuantity?: number | string
 }
 
 /** What generation returns: the document, plus the provenance headers. */
@@ -417,6 +431,11 @@ export interface GeneratedInvoice {
   readonly rulesetVersion: string | null
   /** The scenario the document passed, e.g. "EN16931 XRechnung (UBL Invoice)". */
   readonly scenario: string | null
+  /**
+   * Fields of the invoice data that no part of an invoice knows, so they are in no
+   * document — "lines[0].articleNumber". Empty when every field was used.
+   */
+  readonly ignoredFields: readonly string[]
 }
 
 export interface GeneratePdfOptions {
@@ -432,6 +451,8 @@ export interface GeneratedInvoicePdf {
   readonly rulesetVersion: string | null
   /** The rules the embedded invoice passed, e.g. "EN16931 XRechnung (CII)". */
   readonly scenario: string | null
+  /** As for {@link GeneratedInvoice}: the fields no document took up. */
+  readonly ignoredFields: readonly string[]
 }
 
 export interface ClientOptions {
@@ -590,6 +611,7 @@ export class Normapi {
       xml: await response.text(),
       rulesetVersion: response.headers.get('X-Normapi-Ruleset'),
       scenario: response.headers.get('X-Normapi-Scenario'),
+      ignoredFields: ignoredFieldsOf(response),
     }
   }
 
@@ -619,8 +641,18 @@ export class Normapi {
       pdf: new Uint8Array(await response.arrayBuffer()),
       rulesetVersion: response.headers.get('X-Normapi-Ruleset'),
       scenario: response.headers.get('X-Normapi-Scenario'),
+      ignoredFields: ignoredFieldsOf(response),
     }
   }
+}
+
+/**
+ * X-Normapi-Ignored-Fields as a list. The service names at most 20 and then
+ * "+N more", which stays in the list as it came.
+ */
+function ignoredFieldsOf(response: Response): readonly string[] {
+  const header = response.headers.get('X-Normapi-Ignored-Fields')
+  return header === null || header === '' ? [] : header.split(', ')
 }
 
 /** One-shot convenience against the public service. */

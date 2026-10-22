@@ -55,6 +55,17 @@ describe('generateInvoice', () => {
 
     assert.equal(calls[0].url, 'https://api.normapi.de/v1/invoices?syntax=cii&profile=en16931')
     assert.equal(result.scenario, 'EN16931 (CII)')
+    assert.deepEqual(result.ignoredFields, [])
+  })
+
+  it('lists the fields the service ignored', async () => {
+    const { fetch } = answering('<Invoice/>', {
+      'X-Normapi-Ignored-Fields': 'lines[0].articleNumber, customerNumber',
+    })
+
+    const result = await new Normapi({ fetch }).generateInvoice(invoice)
+
+    assert.deepEqual(result.ignoredFields, ['lines[0].articleNumber', 'customerNumber'])
   })
 })
 
