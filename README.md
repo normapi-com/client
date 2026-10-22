@@ -128,6 +128,36 @@ await generateInvoice(
 The document is then checked against EN 16931 itself (scenario
 `EN16931 (UBL Invoice)`), and a ZUGFeRD PDF carries the profile EN 16931.
 
+### Attachments: a timesheet inside the invoice
+
+Supporting documents (BG-24) travel inside the e-invoice as base64, or as a
+link. PDF, PNG, JPEG, CSV, XLSX and ODS are permitted, up to 20 files and
+3 MB together:
+
+```ts
+import { readFile } from 'node:fs/promises'
+
+const timesheet = await readFile('stundennachweis-2026-09.pdf')
+
+await generateInvoice({
+  ...invoiceData,
+  attachments: [
+    {
+      id: 'SN-2026-09',
+      description: 'Stundennachweis September 2026',
+      filename: 'stundennachweis-2026-09.pdf',
+      mimeCode: 'application/pdf',
+      content: timesheet.toString('base64'),
+    },
+    { id: 'Leistungsbeschreibung', url: 'https://www.example.com/leistungsbeschreibung.pdf' },
+  ],
+})
+```
+
+A type the rules do not permit, or a filename used twice, is an
+`InvoiceNotPermittedError` naming BR-CL-24 or BR-DE-22. In a ZUGFeRD PDF the
+files sit in the embedded XML, and the invoice page lists them.
+
 ## Generate a ZUGFeRD hybrid PDF
 
 The complete hybrid: a human-readable A4 invoice page as PDF/A-3 with the

@@ -176,10 +176,21 @@ export interface InvoiceInput {
   readonly invoiceNumber: string
   /** BT-2, as YYYY-MM-DD. */
   readonly issueDate: string
+  /**
+   * BT-3, UNTDID 1001; "380" when absent. "381" credit note, "384" corrected
+   * invoice, "326" partial, "389" self-billed, "875"–"877" construction.
+   */
+  readonly typeCode?: string
+  /** BG-3, the invoices this one corrects, credits or settles. CII carries one. */
+  readonly precedingInvoices?: readonly PrecedingInvoiceInput[]
   /** BT-9. Payable invoices need this or paymentTerms (BR-CO-25). */
   readonly dueDate?: string
-  /** BT-72. Omitting it draws an advisory from the rule set. */
+  /** BT-72. Omitting it and invoicePeriod draws an advisory from the rule set. */
   readonly deliveryDate?: string
+  /** BG-13: where the supply went. Category K needs its country (BR-IC-12). */
+  readonly deliverTo?: DeliverToInput
+  /** BG-14, the period a monthly or yearly invoice covers. */
+  readonly invoicePeriod?: PeriodInput
   /** BT-5, ISO 4217 — e.g. "EUR". */
   readonly currency: string
   /**
@@ -187,6 +198,16 @@ export interface InvoiceInput {
    * reference. Mandatory in XRechnung (BR-DE-15), optional in EN 16931.
    */
   readonly buyerReference?: string
+  /** BT-13, the buyer's purchase order number. */
+  readonly orderReference?: string
+  /** BT-12. */
+  readonly contractReference?: string
+  /** BT-11. */
+  readonly projectReference?: string
+  /** BT-16, the delivery note (Lieferschein). */
+  readonly despatchAdviceReference?: string
+  /** BG-24, supporting documents: at most 20, their files 3 MB together. */
+  readonly attachments?: readonly AttachmentInput[]
   /** BT-22. */
   readonly note?: string
   readonly seller: PartyInput
@@ -194,7 +215,80 @@ export interface InvoiceInput {
   readonly payment: PaymentInput
   /** BT-20. */
   readonly paymentTerms?: string
+  /** BG-20, allowances on the whole document. */
+  readonly allowances?: readonly AllowanceChargeInput[]
+  /** BG-21, charges on the whole document — freight, packaging. */
+  readonly charges?: readonly AllowanceChargeInput[]
+  /** BT-113, already paid; the amount due is the total less this. */
+  readonly prepaidAmount?: number | string
   readonly lines: readonly LineInput[]
+}
+
+export interface PrecedingInvoiceInput {
+  /** BT-25. */
+  readonly number: string
+  /** BT-26, as YYYY-MM-DD. */
+  readonly issueDate?: string
+}
+
+/** Either end may stand alone (BR-CO-19, BR-CO-20). */
+export interface PeriodInput {
+  /** BT-73 / BT-134, as YYYY-MM-DD. */
+  readonly startDate?: string
+  /** BT-74 / BT-135, as YYYY-MM-DD. */
+  readonly endDate?: string
+}
+
+export interface DeliverToInput {
+  /** BT-70, who received the goods. */
+  readonly name?: string
+  /** BT-71, e.g. a GLN. */
+  readonly locationId?: string
+  /** BT-71-1, ISO 6523 ICD: "0088" for a GLN. */
+  readonly locationIdScheme?: string
+  /** BG-15. */
+  readonly address?: AddressInput
+}
+
+/**
+ * BG-24, one supporting document: a file inside the invoice (content with
+ * filename and mimeCode), a link (url), or a reference alone. BR-CL-24
+ * permits PDF, PNG, JPEG, CSV, XLSX and ODS; BR-DE-22 one use of a filename.
+ */
+export interface AttachmentInput {
+  /** BT-122; the filename when absent (BR-52). */
+  readonly id?: string
+  /** BT-123. */
+  readonly description?: string
+  /** BT-125-2. */
+  readonly filename?: string
+  /** BT-125-1, e.g. "application/pdf". */
+  readonly mimeCode?: string
+  /** BT-125, the file as base64 — of the type mimeCode names. */
+  readonly content?: string
+  /** BT-124, an http(s) address the buyer can fetch the document from. */
+  readonly url?: string
+}
+
+/** BG-20 / BG-21. Give amount or percent, exactly one; reason or reasonCode. */
+export interface AllowanceChargeInput extends LineAllowanceChargeInput {
+  /** BT-95 / BT-102, UNTDID 5305. */
+  readonly vatCategory: 'S' | 'Z' | 'E' | 'AE' | 'K' | 'G' | 'O' | 'L' | 'M'
+  /** BT-96 / BT-103, percent. */
+  readonly vatRate?: number | string
+  /** BT-120, as on a line. */
+  readonly vatExemptionReason?: string
+}
+
+/** BG-27 / BG-28: changes the line net, in the line's VAT category. */
+export interface LineAllowanceChargeInput {
+  readonly amount?: number | string
+  readonly percent?: number | string
+  /** What the percentage is taken of; only with percent (PEPPOL-EN16931-R042). */
+  readonly baseAmount?: number | string
+  readonly reason?: string
+  /** UNTDID 5189 for an allowance (95 discount), UNTDID 7161 for a charge (FC freight). */
+  readonly reasonCode?: string
 }
 
 export interface PartyInput {
@@ -216,6 +310,17 @@ export interface PartyInput {
   readonly address: AddressInput
   /** BG-6 — XRechnung requires it on the seller, all three parts (BR-DE-2 through 7). */
   readonly contact?: ContactInput
+  /** BT-28 / BT-45, the name traded under beside the legal one. */
+  readonly tradingName?: string
+  /** BT-30 / BT-47, the register entry — "HRB 123456" for a GmbH. */
+  readonly registrationId?: string
+  /** BT-30-1 / BT-47-1, ISO 6523 ICD: none for German registers, "0002" for a SIREN. */
+  readonly registrationIdScheme?: string
+  /**
+   * BT-33, seller only: seat, register court and managing directors, as
+   * § 35a GmbHG wants on business letters.
+   */
+  readonly legalInformation?: string
 }
 
 export interface AddressInput {
@@ -236,12 +341,43 @@ export interface ContactInput {
 }
 
 export interface PaymentInput {
-  /** BT-81, UNTDID 4461 — "58" SEPA credit transfer, "30" credit transfer. */
+  /**
+   * BT-81, UNTDID 4461 — "58" SEPA credit transfer, "30" credit transfer,
+   * "59" SEPA direct debit, "48"/"54"/"55" card, "10" cash.
+   */
   readonly meansCode: string
+  /** BT-82, the means in words. */
+  readonly meansText?: string
   /** BT-84 — required by BR-DE-23-a for transfer codes. */
   readonly iban?: string
+  /** BT-85, the payee account holder. */
+  readonly accountName?: string
+  /** BT-86. */
+  readonly bic?: string
   /** BT-83 — remittance information. */
   readonly reference?: string
+  /** BG-18, with means 48, 54 or 55. */
+  readonly card?: CardInput
+  /** BG-19, with means 59; leave out the payee IBAN (BR-DE-25-b). */
+  readonly directDebit?: DirectDebitInput
+}
+
+export interface CardInput {
+  /** BT-87: at most the first 6 and last 4 digits, without mask characters. */
+  readonly number: string
+  /** BT-88. */
+  readonly holder?: string
+  /** VISA, MasterCard …; UBL writes NA when absent. */
+  readonly network?: string
+}
+
+export interface DirectDebitInput {
+  /** BT-89. */
+  readonly mandateReference?: string
+  /** BT-90, the SEPA creditor identifier. */
+  readonly creditorId?: string
+  /** BT-91, the buyer IBAN debited. */
+  readonly debitedAccount?: string
 }
 
 export interface LineInput {
@@ -263,6 +399,14 @@ export interface LineInput {
   readonly vatRate?: number | string
   /** BT-120 — demanded by the rule set for the exempt-family categories. */
   readonly vatExemptionReason?: string
+  /** BG-27. */
+  readonly allowances?: readonly LineAllowanceChargeInput[]
+  /** BG-28. */
+  readonly charges?: readonly LineAllowanceChargeInput[]
+  /** BG-26, the period this line covers. */
+  readonly period?: PeriodInput
+  /** BT-132, the line of the buyer's purchase order this one bills. */
+  readonly orderLineReference?: string
 }
 
 /** What generation returns: the document, plus the provenance headers. */
