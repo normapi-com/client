@@ -92,6 +92,42 @@ touch a float on their way to the server's BigDecimal.
 
 Prefer CII syntax? `generateInvoice(data, { syntax: 'cii' })`.
 
+### Invoices to businesses: `profile: 'en16931'`
+
+The default is XRechnung, which public-sector buyers require, and which adds
+three things to the European norm: a buyer reference (the Leitweg-ID,
+BR-DE-15), a seller contact (BR-DE-2) and an electronic address on both sides.
+Between businesses § 14 UStG accepts the norm alone. Pass the profile and
+leave those out:
+
+```ts
+await generateInvoice(
+  {
+    invoiceNumber: 'SM-2026-047',
+    issueDate: '2026-10-20',
+    dueDate: '2026-11-03',
+    currency: 'EUR',
+    seller: {
+      name: 'Studio Muster Grafikdesign',
+      vatId: 'DE312456789',
+      address: { city: 'Freiburg im Breisgau', postcode: '79098', country: 'DE' },
+    },
+    buyer: {
+      name: 'Beispiel Backstube GmbH',
+      address: { city: 'Freiburg im Breisgau', postcode: '79104', country: 'DE' },
+    },
+    payment: { meansCode: '58', iban: 'DE31680501012345678901' },
+    lines: [
+      { name: 'Logo-Entwicklung', quantity: 1, unit: 'C62', unitPrice: '1200.00', vatCategory: 'S', vatRate: 19 },
+    ],
+  },
+  { profile: 'en16931', apiKey: process.env.NORMAPI_API_KEY },
+)
+```
+
+The document is then checked against EN 16931 itself (scenario
+`EN16931 (UBL Invoice)`), and a ZUGFeRD PDF carries the profile EN 16931.
+
 ## Generate a ZUGFeRD hybrid PDF
 
 The complete hybrid: a human-readable A4 invoice page as PDF/A-3 with the
@@ -107,6 +143,9 @@ const { pdf, scenario } = await generateInvoicePdf(invoiceData, {
 })
 await writeFile('rechnung.pdf', pdf)
 ```
+
+The embedded invoice is an XRechnung; `{ profile: 'en16931' }` makes the PDF a
+ZUGFeRD EN 16931 hybrid for a business recipient.
 
 ## Reading the result
 

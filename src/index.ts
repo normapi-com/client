@@ -143,9 +143,20 @@ export interface RuleInfo {
   readonly explanation: Explanation
 }
 
+/**
+ * The rules a generated invoice follows. `xrechnung` (the server's default) is
+ * the German CIUS public-sector buyers require: it adds a buyer reference
+ * (BR-DE-15), a seller contact (BR-DE-2) and both electronic addresses to
+ * EN 16931. `en16931` is the norm alone, which § 14 UStG accepts between
+ * businesses; in a ZUGFeRD PDF it is the profile EN 16931.
+ */
+export type Profile = 'xrechnung' | 'en16931'
+
 export interface GenerateOptions {
   /** Output syntax: UBL (default) or UN/CEFACT CII. */
   readonly syntax?: 'ubl' | 'cii'
+  /** XRechnung when absent. */
+  readonly profile?: Profile
   readonly signal?: AbortSignal
 }
 
@@ -165,14 +176,17 @@ export interface InvoiceInput {
   readonly invoiceNumber: string
   /** BT-2, as YYYY-MM-DD. */
   readonly issueDate: string
-  /** BT-9. XRechnung wants this or paymentTerms on payable invoices. */
+  /** BT-9. Payable invoices need this or paymentTerms (BR-CO-25). */
   readonly dueDate?: string
   /** BT-72. Omitting it draws an advisory from the rule set. */
   readonly deliveryDate?: string
   /** BT-5, ISO 4217 — e.g. "EUR". */
   readonly currency: string
-  /** BT-10 — mandatory in XRechnung; the Leitweg-ID for public-sector buyers. */
-  readonly buyerReference: string
+  /**
+   * BT-10 — the Leitweg-ID for public-sector buyers, else the buyer's own
+   * reference. Mandatory in XRechnung (BR-DE-15), optional in EN 16931.
+   */
+  readonly buyerReference?: string
   /** BT-22. */
   readonly note?: string
   readonly seller: PartyInput
@@ -195,12 +209,12 @@ export interface PartyInput {
   readonly vatId?: string
   /** BT-32 — the German Steuernummer. */
   readonly taxNumber?: string
-  /** BT-34 / BT-49, usually an email address. */
+  /** BT-34 / BT-49, usually an email address. XRechnung requires both sides'. */
   readonly electronicAddress?: string
   /** EAS code for the electronic address; defaults to "EM" (email). */
   readonly electronicAddressScheme?: string
   readonly address: AddressInput
-  /** BG-6 — mandatory on the seller side (BR-DE-2 through 7). */
+  /** BG-6 — XRechnung requires it on the seller, all three parts (BR-DE-2 through 7). */
   readonly contact?: ContactInput
 }
 
@@ -213,9 +227,12 @@ export interface AddressInput {
 }
 
 export interface ContactInput {
-  readonly name: string
-  readonly phone: string
-  readonly email: string
+  /** BT-41. */
+  readonly name?: string
+  /** BT-42. */
+  readonly phone?: string
+  /** BT-43. */
+  readonly email?: string
 }
 
 export interface PaymentInput {
@@ -250,7 +267,7 @@ export interface LineInput {
 
 /** What generation returns: the document, plus the provenance headers. */
 export interface GeneratedInvoice {
-  /** The XRechnung document, exactly as the API returned it. */
+  /** The XML document, exactly as the API returned it. */
   readonly xml: string
   /** The rule set that validated the document before it left, e.g. "v2026-01-31". */
   readonly rulesetVersion: string | null
@@ -259,6 +276,8 @@ export interface GeneratedInvoice {
 }
 
 export interface GeneratePdfOptions {
+  /** XRechnung when absent; `en16931` makes it a ZUGFeRD EN 16931 hybrid. */
+  readonly profile?: Profile
   readonly signal?: AbortSignal
 }
 
@@ -395,7 +414,8 @@ export class Normapi {
   }
 
   /**
-   * Generate a validated XRechnung (UBL) from invoice data.
+   * Generate a validated e-invoice from invoice data: an XRechnung (UBL) unless
+   * the options say otherwise.
    *
    * The server computes every total and validates the generated document
    * against the official rule set before responding — a resolved promise
@@ -406,8 +426,11 @@ export class Normapi {
     invoice: InvoiceInput,
     options: GenerateOptions = {},
   ): Promise<GeneratedInvoice> {
-    const syntax = options.syntax === undefined ? '' : `?syntax=${options.syntax}`
-    const response = await this.fetchImpl(`${this.baseUrl}/v1/invoices${syntax}`, {
+    const query = new URLSearchParams()
+    if (options.syntax !== undefined) query.set('syntax', options.syntax)
+    if (options.profile !== undefined) query.set('profile', options.profile)
+    const search = query.toString() === '' ? '' : `?${query.toString()}`
+    const response = await this.fetchImpl(`${this.baseUrl}/v1/invoices${search}`, {
       method: 'POST',
       headers: this.headers('application/json'),
       body: JSON.stringify(invoice),
@@ -435,7 +458,8 @@ export class Normapi {
     invoice: InvoiceInput,
     options: GeneratePdfOptions = {},
   ): Promise<GeneratedInvoicePdf> {
-    const response = await this.fetchImpl(`${this.baseUrl}/v1/invoices?syntax=zugferd`, {
+    const profile = options.profile === undefined ? '' : `&profile=${options.profile}`
+    const response = await this.fetchImpl(`${this.baseUrl}/v1/invoices?syntax=zugferd${profile}`, {
       method: 'POST',
       headers: this.headers('application/json'),
       body: JSON.stringify(invoice),
