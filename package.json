@@ -1,7 +1,7 @@
 {
   "name": "@normapi/client",
-  "version": "0.6.0",
-  "description": "Validate German e-invoices (XRechnung UBL/CII, ZUGFeRD/Factur-X PDF) against the official KoSIT rule set via the NormAPI service.",
+  "version": "0.7.0",
+  "description": "Validate, generate and read German e-invoices (XRechnung UBL/CII, ZUGFeRD/Factur-X PDF) against the official KoSIT rule set via the NormAPI service.",
   "keywords": [
     "xrechnung",
     "zugferd",
@@ -11,7 +11,8 @@
     "e-invoice",
     "invoice",
     "validation",
-    "kosit"
+    "kosit",
+    "multi-tenant"
   ],
   "homepage": "https://normapi.de/en/docs",
   "repository": {

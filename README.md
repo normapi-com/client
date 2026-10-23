@@ -1,8 +1,8 @@
 # @normapi/client
 
-Validate German e-invoices — **XRechnung** (UBL and CII) and **ZUGFeRD / Factur-X**
-hybrid PDFs — against the official KoSIT rule set, without running a Java
-toolchain yourself.
+Validate, generate and read German e-invoices — **XRechnung** (UBL and CII)
+and **ZUGFeRD / Factur-X** hybrid PDFs — against the official KoSIT rule set,
+without running a Java toolchain yourself.
 
 This is the client for [NormAPI](https://normapi.de). The service embeds the
 official validator and the current XRechnung rule set; this package is a thin,
@@ -177,6 +177,88 @@ await writeFile('rechnung.pdf', pdf)
 The embedded invoice is an XRechnung; `{ profile: 'en16931' }` makes the PDF a
 ZUGFeRD EN 16931 hybrid for a business recipient.
 
+## Read an incoming invoice
+
+`parse` turns a received e-invoice into data — XRechnung or any EN 16931
+invoice as UBL or CII, or a ZUGFeRD / Factur-X PDF, whose embedded XML is what
+gets read. Free and never counted, like validation; no key needed.
+
+```ts
+import { parse } from '@normapi/client'
+import { readFile } from 'node:fs/promises'
+
+const { invoice, stated, notMapped } = await parse(await readFile('eingang.pdf'))
+
+console.log(invoice.invoiceNumber, invoice.seller?.name, invoice.payment?.iban)
+for (const [index, line] of invoice.lines.entries()) {
+  console.log(line.name, line.quantity, line.unit, stated.lines[index]?.netAmount)
+}
+console.log(`due: ${stated.amountDue} ${invoice.currency}`)
+```
+
+- `invoice` has the shape `generateInvoice` takes, so a document can be read,
+  changed and generated again — `generateInvoice(invoice, { profile })` with
+  the `profile` the result names. Every field is present, `null` where the
+  document has no value.
+- `stated` holds what generation computes and the invoice shape therefore
+  leaves out — the totals, the VAT breakdown, each line's net — as exact
+  decimal strings, never a float: `"336.9"` stays `"336.9"`.
+- `notMapped` lists every value of the document the result does not carry,
+  each path with a count: an item classification, a payee, a date that is no
+  date. Empty for an invoice NormAPI generated; nothing is dropped without a
+  trace.
+- `{ validate: true }` adds the KoSIT verdict as `validation`, exactly what
+  `validate` returns. Without it no rules run, and `validation` is `null`.
+
+A document with gaps is read as far as it goes. Only one that is no invoice at
+all throws: a `NormapiError` with status 422 and a `detail` that says why —
+not well-formed XML, a DOCTYPE, a root that is no invoice, a PDF without one.
+
+## Invoicing for your own customers
+
+Software that generates invoices for its own customers — accounting, a shop
+system, a portal — names the customer each call is for. It stays one account
+with one allowance; NormAPI counts each customer on its own, and you can hold
+any customer to a monthly ceiling.
+
+```ts
+import { Normapi, CustomerQuotaExceededError } from '@normapi/client'
+
+// One client per customer, or `{ customer }` on a single call (null for none).
+const client = new Normapi({ apiKey: process.env.NORMAPI_KEY, customer: 'tenant-42' })
+
+try {
+  const { xml, customerQuota } = await client.generateInvoice(invoice)
+  // customerQuota: { used, limit } when tenant-42 has a ceiling, else null
+} catch (error) {
+  if (error instanceof CustomerQuotaExceededError) {
+    // tenant-42 generated its error.limit invoices this month; the others carry on
+  }
+}
+
+await client.setCustomerAllowance('tenant-42', 500) // at most 500 invoices a month
+await client.clearCustomerAllowance('tenant-42')
+
+// The month, to bill each customer on what it generated:
+for await (const row of client.customers({ month: '2026-10' })) {
+  console.log(row.customer, row.generated, row.refused, row.monthlyInvoices)
+}
+```
+
+- The reference is `X-Normapi-Customer`: 1–64 letters, digits and `. _ : -`,
+  starting with a letter or digit, case-sensitive. Send your internal id,
+  never a name or an email address — it is stored in the usage counters and
+  the request log.
+- It is sent with `validate`, `parse`, `generateInvoice` and
+  `generateInvoicePdf`, and counts only on calls with a key.
+- `CustomerQuotaExceededError` is a 429 but not a `RateLimitError`: its
+  `retryAfterSeconds` runs to the start of the next month (`resetsAt`).
+- `listCustomers({ month, limit, cursor })` reads one page; `customers()`
+  walks them all; `getCustomer(ref)` reads one. These need a key that belongs
+  to an account. A key bound to one customer in the account area counts for
+  that customer without the header, sees only that customer, and cannot change
+  a ceiling.
+
 ## Reading the result
 
 - **`acceptable` is the verdict.** Base accept/reject decisions on this flag
@@ -243,12 +325,20 @@ An **invalid invoice is not an error** — it is a successful validation with
 be processed:
 
 ```ts
-import { validate, RateLimitError, ValidatorBusyError, NormapiError } from '@normapi/client'
+import {
+  validate,
+  CustomerQuotaExceededError,
+  RateLimitError,
+  ValidatorBusyError,
+  NormapiError,
+} from '@normapi/client'
 
 try {
   await validate(xml)
 } catch (error) {
-  if (error instanceof RateLimitError) {
+  if (error instanceof CustomerQuotaExceededError) {
+    // generation only: this customer reached its monthly ceiling — raise it, or wait for the month
+  } else if (error instanceof RateLimitError) {
     // over the per-client budget — wait error.retryAfterSeconds, then retry
   } else if (error instanceof ValidatorBusyError) {
     // every validation slot busy — retry after error.retryAfterSeconds

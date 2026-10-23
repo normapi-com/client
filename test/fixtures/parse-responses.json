@@ -1,0 +1,2017 @@
+{
+ "kosit-ubl-validate": {
+  "syntax": "ubl",
+  "documentKind": "invoice",
+  "source": {
+   "kind": "xml",
+   "attachment": null
+  },
+  "specificationId": "urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0",
+  "businessProcess": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+  "profile": "xrechnung",
+  "invoice": {
+   "invoiceNumber": "123456XX",
+   "issueDate": "2016-04-04",
+   "typeCode": "380",
+   "precedingInvoices": [],
+   "dueDate": null,
+   "deliveryDate": null,
+   "deliverTo": null,
+   "invoicePeriod": null,
+   "currency": "EUR",
+   "buyerReference": "04011000-12345-03",
+   "orderReference": null,
+   "contractReference": null,
+   "projectReference": null,
+   "despatchAdviceReference": null,
+   "attachments": [],
+   "note": "#ADU#Es gelten unsere Allgem. Geschäftsbedingungen, die Sie unter […] finden.",
+   "seller": {
+    "name": "[Seller name]",
+    "identifier": null,
+    "vatId": "DE 123456789",
+    "taxNumber": null,
+    "electronicAddress": "seller@email.de",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "[Seller address line 1]",
+     "city": "[Seller city]",
+     "postcode": "12345",
+     "country": "DE"
+    },
+    "contact": {
+     "name": "nicht vorhanden",
+     "phone": "+49 1234-5678",
+     "email": "seller@email.de"
+    },
+    "tradingName": "[Seller trading name]",
+    "registrationId": "[HRA-Eintrag]",
+    "registrationIdScheme": null,
+    "legalInformation": "123/456/7890, HRA-Eintrag in […]"
+   },
+   "buyer": {
+    "name": "[Buyer name]",
+    "identifier": "[Buyer identifier]",
+    "vatId": null,
+    "taxNumber": null,
+    "electronicAddress": "buyer@info.de",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "[Buyer address line 1]",
+     "city": "[Buyer city]",
+     "postcode": "12345",
+     "country": "DE"
+    },
+    "contact": null,
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "payment": {
+    "meansCode": "58",
+    "iban": "DE79000000001234567890",
+    "reference": null,
+    "meansText": null,
+    "accountName": null,
+    "bic": null,
+    "card": null,
+    "directDebit": null
+   },
+   "paymentTerms": "Zahlbar sofort ohne Abzug.",
+   "allowances": [],
+   "charges": [],
+   "prepaidAmount": null,
+   "lines": [
+    {
+     "id": "Zeitschrift [...]",
+     "name": "Zeitschrift [...]",
+     "description": "Zeitschrift Inland",
+     "quantity": 1,
+     "unit": "XPP",
+     "unitPrice": 288.79,
+     "vatCategory": "S",
+     "vatRate": 7,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": {
+      "startDate": "2016-01-01",
+      "endDate": "2016-12-31"
+     },
+     "orderLineReference": "6171175.1",
+     "note": "Die letzte Lieferung im Rahmen des abgerechneten Abonnements erfolgt in 12/2016 Lieferung erfolgt / erfolgte direkt vom Verlag",
+     "sellerItemId": "246",
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    },
+    {
+     "id": "Porto + Versandkosten",
+     "name": "Porto + Versandkosten",
+     "description": null,
+     "quantity": 1,
+     "unit": "XPP",
+     "unitPrice": 26.07,
+     "vatCategory": "S",
+     "vatRate": 7,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    }
+   ]
+  },
+  "stated": {
+   "lineTotal": "314.86",
+   "allowanceTotal": null,
+   "chargeTotal": null,
+   "netTotal": "314.86",
+   "vatTotal": "22.04",
+   "vatAccountingCurrency": null,
+   "vatTotalInAccountingCurrency": null,
+   "grossTotal": "336.9",
+   "prepaidAmount": null,
+   "roundingAmount": null,
+   "amountDue": "336.9",
+   "vatBreakdown": [
+    {
+     "category": "S",
+     "rate": "7",
+     "taxableAmount": "314.86",
+     "vatAmount": "22.04",
+     "exemptionReason": null,
+     "exemptionReasonCode": null
+    }
+   ],
+   "lines": [
+    {
+     "netAmount": "288.79",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    },
+    {
+     "netAmount": "26.07",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    }
+   ],
+   "allowances": [],
+   "charges": []
+  },
+  "notMapped": [
+   {
+    "path": "/Invoice/cac:InvoiceLine/cac:Item/cac:CommodityClassification/cbc:ItemClassificationCode",
+    "count": 1
+   },
+   {
+    "path": "/Invoice/cac:InvoiceLine/cac:Item/cac:CommodityClassification/cbc:ItemClassificationCode/@listID",
+    "count": 1
+   }
+  ],
+  "validation": {
+   "acceptable": true,
+   "wellFormed": true,
+   "schemaValid": true,
+   "schematronValid": false,
+   "businessRulesEvaluated": true,
+   "rulesetVersion": "v2026-08-31",
+   "scenario": "EN16931 XRechnung (UBL Invoice)",
+   "findings": [
+    {
+     "code": "BR-DE-TMP-32",
+     "severity": "INFORMATION",
+     "text": "[BR-DE-TMP-32] Eine Rechnung sollte zur Angabe des Liefer-/Leistungsdatums entweder BT-72 \"Actual delivery date\", BG-14 \"Invoicing period\" oder in jeder Rechnungsposition BG-26 \"Invoice line period\" enthalten.",
+     "origin": "SCHEMATRON",
+     "location": "/Q{urn:oasis:names:specification:ubl:schema:xsd:Invoice-2}Invoice[1]",
+     "line": null,
+     "column": null,
+     "test": "cac:Delivery/cbc:ActualDeliveryDate         or cac:InvoicePeriod         or (every $line in (cac:InvoiceLine | cac:CreditNoteLine) satisfies $line/cac:InvoicePeriod)",
+     "explanation": {
+      "meaning": "A notice, not an error: the invoice should state the delivery or service date in structured form — as the actual delivery date (BT-72), as the invoicing period (BG-14), or as a period on every single invoice line (BG-26). If all three are missing the invoice remains valid, and the validator still recommends accepting it. Only the presence of one of the elements is checked; in UBL, a cac:InvoicePeriod holding nothing but the VAT point date code (BT-8) is therefore enough, although it contains no date.",
+      "cause": "All three are optional in EN 16931, and many invoices give the time of supply — a mandatory particular under § 14(4) sentence 1 no. 6 UStG — only in free text (\"Leistungsdatum entspricht Rechnungsdatum\", i.e. the service date is the invoice date) or as the VAT point date (BT-7), which does not count here. The line period, for its part, only helps if every line carries one: even test invoice 01.01a from KoSIT’s XRechnung test suite draws the notice, because its \"Porto + Versandkosten\" line has no period.",
+      "fix": "For a single delivery, set BT-72: cac:Delivery/cbc:ActualDeliveryDate in UBL, ram:ApplicableHeaderTradeDelivery/ram:ActualDeliverySupplyChainEvent/ram:OccurrenceDateTime with a udt:DateTimeString in format=\"102\" in CII. For a service over a period, use BG-14 with start and end — cac:InvoicePeriod with cbc:StartDate and cbc:EndDate in UBL, ram:ApplicableHeaderTradeSettlement/ram:BillingSpecifiedPeriod with ram:StartDateTime and ram:EndDateTime in CII. If lines already carry periods of their own, those must lie within BG-14, or PEPPOL-EN16931-R110 and PEPPOL-EN16931-R111 reject the invoice; an empty group does clear the notice, but fails BR-CO-19.",
+      "url": "https://normapi.com/en/errors/br-de-tmp-32"
+     }
+    }
+   ]
+  }
+ },
+ "zugferd-01": {
+  "syntax": "cii",
+  "documentKind": "invoice",
+  "source": {
+   "kind": "pdf",
+   "attachment": "xrechnung.xml"
+  },
+  "specificationId": "urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0",
+  "businessProcess": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+  "profile": "xrechnung",
+  "invoice": {
+   "invoiceNumber": "RE-2026-1001",
+   "issueDate": "2026-10-01",
+   "typeCode": "380",
+   "precedingInvoices": [],
+   "dueDate": "2026-10-31",
+   "deliveryDate": "2026-09-28",
+   "deliverTo": null,
+   "invoicePeriod": null,
+   "currency": "EUR",
+   "buyerReference": "4500012345",
+   "orderReference": null,
+   "contractReference": null,
+   "projectReference": null,
+   "despatchAdviceReference": null,
+   "attachments": [],
+   "note": "Fiktive Beispielrechnung von NormAPI, frei nutzbar (CC0). Namen, Nummern und Konten sind erfunden.",
+   "seller": {
+    "name": "Muster Software GmbH",
+    "identifier": null,
+    "vatId": "DE123456789",
+    "taxNumber": null,
+    "electronicAddress": "rechnung@muster-software.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Beispielstraße 12",
+     "city": "Berlin",
+     "postcode": "10115",
+     "country": "DE"
+    },
+    "contact": {
+     "name": "Maria Muster",
+     "phone": "+49 30 1234567",
+     "email": "maria.muster@muster-software.example"
+    },
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "buyer": {
+    "name": "Beispiel Handel AG",
+    "identifier": null,
+    "vatId": null,
+    "taxNumber": null,
+    "electronicAddress": "einkauf@beispiel-handel.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Handelsweg 3",
+     "city": "Hamburg",
+     "postcode": "20095",
+     "country": "DE"
+    },
+    "contact": null,
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "payment": {
+    "meansCode": "58",
+    "iban": "DE17100500000123456789",
+    "reference": "RE-2026-1001",
+    "meansText": null,
+    "accountName": "Muster Software GmbH",
+    "bic": "BELADEBEXXX",
+    "card": null,
+    "directDebit": null
+   },
+   "paymentTerms": "Zahlbar innerhalb von 30 Tagen ohne Abzug.",
+   "allowances": [],
+   "charges": [],
+   "prepaidAmount": null,
+   "lines": [
+    {
+     "id": "1",
+     "name": "Softwareentwicklung ERP-Schnittstelle",
+     "description": "Anbindung des Warenwirtschaftssystems, September 2026",
+     "quantity": 24,
+     "unit": "HUR",
+     "unitPrice": 95.0,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    },
+    {
+     "id": "2",
+     "name": "Projektmanagement",
+     "description": null,
+     "quantity": 6,
+     "unit": "HUR",
+     "unitPrice": 110.0,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    }
+   ]
+  },
+  "stated": {
+   "lineTotal": "2940.00",
+   "allowanceTotal": null,
+   "chargeTotal": null,
+   "netTotal": "2940.00",
+   "vatTotal": "558.60",
+   "vatAccountingCurrency": null,
+   "vatTotalInAccountingCurrency": null,
+   "grossTotal": "3498.60",
+   "prepaidAmount": null,
+   "roundingAmount": null,
+   "amountDue": "3498.60",
+   "vatBreakdown": [
+    {
+     "category": "S",
+     "rate": "19.00",
+     "taxableAmount": "2940.00",
+     "vatAmount": "558.60",
+     "exemptionReason": null,
+     "exemptionReasonCode": null
+    }
+   ],
+   "lines": [
+    {
+     "netAmount": "2280.00",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    },
+    {
+     "netAmount": "660.00",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    }
+   ],
+   "allowances": [],
+   "charges": []
+  },
+  "notMapped": [],
+  "validation": null
+ },
+ "12-gutschrift-cii": {
+  "syntax": "cii",
+  "documentKind": "creditNote",
+  "source": {
+   "kind": "xml",
+   "attachment": null
+  },
+  "specificationId": "urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0",
+  "businessProcess": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+  "profile": "xrechnung",
+  "invoice": {
+   "invoiceNumber": "GU-2026-0007",
+   "issueDate": "2026-10-12",
+   "typeCode": "381",
+   "precedingInvoices": [
+    {
+     "number": "RE-2026-1001",
+     "issueDate": "2026-10-01"
+    }
+   ],
+   "dueDate": "2026-10-26",
+   "deliveryDate": "2026-09-28",
+   "deliverTo": null,
+   "invoicePeriod": null,
+   "currency": "EUR",
+   "buyerReference": "4500012345",
+   "orderReference": null,
+   "contractReference": null,
+   "projectReference": null,
+   "despatchAdviceReference": null,
+   "attachments": [],
+   "note": "Fiktive Beispielrechnung von NormAPI, frei nutzbar (CC0). Namen, Nummern und Konten sind erfunden.",
+   "seller": {
+    "name": "Muster Software GmbH",
+    "identifier": null,
+    "vatId": "DE123456789",
+    "taxNumber": null,
+    "electronicAddress": "rechnung@muster-software.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Beispielstraße 12",
+     "city": "Berlin",
+     "postcode": "10115",
+     "country": "DE"
+    },
+    "contact": {
+     "name": "Maria Muster",
+     "phone": "+49 30 1234567",
+     "email": "maria.muster@muster-software.example"
+    },
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "buyer": {
+    "name": "Beispiel Handel AG",
+    "identifier": null,
+    "vatId": null,
+    "taxNumber": null,
+    "electronicAddress": "einkauf@beispiel-handel.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Handelsweg 3",
+     "city": "Hamburg",
+     "postcode": "20095",
+     "country": "DE"
+    },
+    "contact": null,
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "payment": {
+    "meansCode": "58",
+    "iban": "DE34200505501234567890",
+    "reference": "GU-2026-0007",
+    "meansText": null,
+    "accountName": null,
+    "bic": null,
+    "card": null,
+    "directDebit": null
+   },
+   "paymentTerms": "Wir überweisen den Betrag innerhalb von 14 Tagen auf Ihr Konto.",
+   "allowances": [],
+   "charges": [],
+   "prepaidAmount": null,
+   "lines": [
+    {
+     "id": "1",
+     "name": "Softwareentwicklung ERP-Schnittstelle, nicht erbrachte Stunden",
+     "description": "Gutschrift zu Rechnung RE-2026-1001",
+     "quantity": 4,
+     "unit": "HUR",
+     "unitPrice": 95.0,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    }
+   ]
+  },
+  "stated": {
+   "lineTotal": "380.00",
+   "allowanceTotal": null,
+   "chargeTotal": null,
+   "netTotal": "380.00",
+   "vatTotal": "72.20",
+   "vatAccountingCurrency": null,
+   "vatTotalInAccountingCurrency": null,
+   "grossTotal": "452.20",
+   "prepaidAmount": null,
+   "roundingAmount": null,
+   "amountDue": "452.20",
+   "vatBreakdown": [
+    {
+     "category": "S",
+     "rate": "19.00",
+     "taxableAmount": "380.00",
+     "vatAmount": "72.20",
+     "exemptionReason": null,
+     "exemptionReasonCode": null
+    }
+   ],
+   "lines": [
+    {
+     "netAmount": "380.00",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    }
+   ],
+   "allowances": [],
+   "charges": []
+  },
+  "notMapped": [],
+  "validation": null
+ },
+ "20-sepa-lastschrift-cii": {
+  "syntax": "cii",
+  "documentKind": "invoice",
+  "source": {
+   "kind": "xml",
+   "attachment": null
+  },
+  "specificationId": "urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0",
+  "businessProcess": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+  "profile": "xrechnung",
+  "invoice": {
+   "invoiceNumber": "RE-2026-1003",
+   "issueDate": "2026-10-01",
+   "typeCode": "380",
+   "precedingInvoices": [],
+   "dueDate": "2026-10-15",
+   "deliveryDate": "2026-10-01",
+   "deliverTo": null,
+   "invoicePeriod": null,
+   "currency": "EUR",
+   "buyerReference": "Vertrag 2025-0420",
+   "orderReference": null,
+   "contractReference": null,
+   "projectReference": null,
+   "despatchAdviceReference": null,
+   "attachments": [],
+   "note": "Fiktive Beispielrechnung von NormAPI, frei nutzbar (CC0). Namen, Nummern und Konten sind erfunden.",
+   "seller": {
+    "name": "Muster Software GmbH",
+    "identifier": null,
+    "vatId": "DE123456789",
+    "taxNumber": null,
+    "electronicAddress": "rechnung@muster-software.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Beispielstraße 12",
+     "city": "Berlin",
+     "postcode": "10115",
+     "country": "DE"
+    },
+    "contact": {
+     "name": "Maria Muster",
+     "phone": "+49 30 1234567",
+     "email": "maria.muster@muster-software.example"
+    },
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "buyer": {
+    "name": "Beispiel Handel AG",
+    "identifier": null,
+    "vatId": null,
+    "taxNumber": null,
+    "electronicAddress": "einkauf@beispiel-handel.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Handelsweg 3",
+     "city": "Hamburg",
+     "postcode": "20095",
+     "country": "DE"
+    },
+    "contact": null,
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "payment": {
+    "meansCode": "59",
+    "iban": null,
+    "reference": "RE-2026-1003",
+    "meansText": null,
+    "accountName": null,
+    "bic": null,
+    "card": null,
+    "directDebit": {
+     "mandateReference": "MANDAT-2026-0815",
+     "creditorId": "DE98ZZZ09999999999",
+     "debitedAccount": "DE34200505501234567890"
+    }
+   },
+   "paymentTerms": "Der Betrag wird am 15. Oktober 2026 per SEPA-Lastschrift von Ihrem Konto eingezogen.",
+   "allowances": [],
+   "charges": [],
+   "prepaidAmount": null,
+   "lines": [
+    {
+     "id": "1",
+     "name": "Software-Abonnement Business, Oktober 2026",
+     "description": null,
+     "quantity": 1,
+     "unit": "MON",
+     "unitPrice": 249.0,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    },
+    {
+     "id": "2",
+     "name": "Zusätzliche Nutzer, Oktober 2026",
+     "description": null,
+     "quantity": 5,
+     "unit": "C62",
+     "unitPrice": 12.0,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    }
+   ]
+  },
+  "stated": {
+   "lineTotal": "309.00",
+   "allowanceTotal": null,
+   "chargeTotal": null,
+   "netTotal": "309.00",
+   "vatTotal": "58.71",
+   "vatAccountingCurrency": null,
+   "vatTotalInAccountingCurrency": null,
+   "grossTotal": "367.71",
+   "prepaidAmount": null,
+   "roundingAmount": null,
+   "amountDue": "367.71",
+   "vatBreakdown": [
+    {
+     "category": "S",
+     "rate": "19.00",
+     "taxableAmount": "309.00",
+     "vatAmount": "58.71",
+     "exemptionReason": null,
+     "exemptionReasonCode": null
+    }
+   ],
+   "lines": [
+    {
+     "netAmount": "249.00",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    },
+    {
+     "netAmount": "60.00",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    }
+   ],
+   "allowances": [],
+   "charges": []
+  },
+  "notMapped": [],
+  "validation": null
+ },
+ "21-kartenzahlung-cii": {
+  "syntax": "cii",
+  "documentKind": "invoice",
+  "source": {
+   "kind": "xml",
+   "attachment": null
+  },
+  "specificationId": "urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0",
+  "businessProcess": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+  "profile": "xrechnung",
+  "invoice": {
+   "invoiceNumber": "BW-2026-104477",
+   "issueDate": "2026-10-16",
+   "typeCode": "380",
+   "precedingInvoices": [],
+   "dueDate": "2026-10-16",
+   "deliveryDate": "2026-10-15",
+   "deliverTo": null,
+   "invoicePeriod": null,
+   "currency": "EUR",
+   "buyerReference": "Online-Bestellung 104477",
+   "orderReference": null,
+   "contractReference": null,
+   "projectReference": null,
+   "despatchAdviceReference": null,
+   "attachments": [],
+   "note": "Fiktive Beispielrechnung von NormAPI, frei nutzbar (CC0). Namen, Nummern und Konten sind erfunden.",
+   "seller": {
+    "name": "Bürowelt Muster GmbH",
+    "identifier": null,
+    "vatId": "DE680246802",
+    "taxNumber": null,
+    "electronicAddress": "shop@buerowelt-muster.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Papierstraße 22",
+     "city": "Hannover",
+     "postcode": "30159",
+     "country": "DE"
+    },
+    "contact": {
+     "name": "Kundenservice Bürowelt",
+     "phone": "+49 511 2223344",
+     "email": "service@buerowelt-muster.example"
+    },
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "buyer": {
+    "name": "Beispiel Handel AG",
+    "identifier": null,
+    "vatId": null,
+    "taxNumber": null,
+    "electronicAddress": "einkauf@beispiel-handel.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Handelsweg 3",
+     "city": "Hamburg",
+     "postcode": "20095",
+     "country": "DE"
+    },
+    "contact": null,
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "payment": {
+    "meansCode": "54",
+    "iban": null,
+    "reference": "BW-2026-104477",
+    "meansText": null,
+    "accountName": null,
+    "bic": null,
+    "card": {
+     "number": "4821",
+     "holder": "Jonas Beispiel",
+     "network": null
+    },
+    "directDebit": null
+   },
+   "paymentTerms": "Der Betrag wird Ihrer Kreditkarte belastet.",
+   "allowances": [],
+   "charges": [],
+   "prepaidAmount": null,
+   "lines": [
+    {
+     "id": "1",
+     "name": "Kopierpapier A4, 80 g, 2.500 Blatt",
+     "description": null,
+     "quantity": 4,
+     "unit": "C62",
+     "unitPrice": 21.9,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    },
+    {
+     "id": "2",
+     "name": "Toner schwarz, Modell TN-2420",
+     "description": null,
+     "quantity": 2,
+     "unit": "C62",
+     "unitPrice": 64.9,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    }
+   ]
+  },
+  "stated": {
+   "lineTotal": "217.40",
+   "allowanceTotal": null,
+   "chargeTotal": null,
+   "netTotal": "217.40",
+   "vatTotal": "41.31",
+   "vatAccountingCurrency": null,
+   "vatTotalInAccountingCurrency": null,
+   "grossTotal": "258.71",
+   "prepaidAmount": null,
+   "roundingAmount": null,
+   "amountDue": "258.71",
+   "vatBreakdown": [
+    {
+     "category": "S",
+     "rate": "19.00",
+     "taxableAmount": "217.40",
+     "vatAmount": "41.31",
+     "exemptionReason": null,
+     "exemptionReasonCode": null
+    }
+   ],
+   "lines": [
+    {
+     "netAmount": "87.60",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    },
+    {
+     "netAmount": "129.80",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    }
+   ],
+   "allowances": [],
+   "charges": []
+  },
+  "notMapped": [],
+  "validation": null
+ },
+ "23-positionsrabatt-cii": {
+  "syntax": "cii",
+  "documentKind": "invoice",
+  "source": {
+   "kind": "xml",
+   "attachment": null
+  },
+  "specificationId": "urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0",
+  "businessProcess": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+  "profile": "xrechnung",
+  "invoice": {
+   "invoiceNumber": "MB-2026-0571",
+   "issueDate": "2026-10-19",
+   "typeCode": "380",
+   "precedingInvoices": [],
+   "dueDate": "2026-11-18",
+   "deliveryDate": "2026-10-16",
+   "deliverTo": null,
+   "invoicePeriod": null,
+   "currency": "EUR",
+   "buyerReference": "4500012411",
+   "orderReference": null,
+   "contractReference": null,
+   "projectReference": null,
+   "despatchAdviceReference": null,
+   "attachments": [],
+   "note": "Fiktive Beispielrechnung von NormAPI, frei nutzbar (CC0). Namen, Nummern und Konten sind erfunden.",
+   "seller": {
+    "name": "Muster Büromöbel GmbH",
+    "identifier": null,
+    "vatId": "DE246813579",
+    "taxNumber": null,
+    "electronicAddress": "rechnung@muster-bueromoebel.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Holzweg 17",
+     "city": "Herford",
+     "postcode": "32052",
+     "country": "DE"
+    },
+    "contact": {
+     "name": "Eva Muster",
+     "phone": "+49 5221 890123",
+     "email": "eva.muster@muster-bueromoebel.example"
+    },
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "buyer": {
+    "name": "Beispiel Handel AG",
+    "identifier": null,
+    "vatId": null,
+    "taxNumber": null,
+    "electronicAddress": "einkauf@beispiel-handel.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Handelsweg 3",
+     "city": "Hamburg",
+     "postcode": "20095",
+     "country": "DE"
+    },
+    "contact": null,
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "payment": {
+    "meansCode": "58",
+    "iban": "DE26494501200098765432",
+    "reference": "MB-2026-0571",
+    "meansText": null,
+    "accountName": null,
+    "bic": null,
+    "card": null,
+    "directDebit": null
+   },
+   "paymentTerms": "Zahlbar innerhalb von 30 Tagen ohne Abzug.",
+   "allowances": [],
+   "charges": [],
+   "prepaidAmount": null,
+   "lines": [
+    {
+     "id": "1",
+     "name": "Schreibtisch höhenverstellbar, 160 × 80 cm",
+     "description": null,
+     "quantity": 10,
+     "unit": "C62",
+     "unitPrice": 549.0,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [
+      {
+       "amount": null,
+       "percent": 10,
+       "baseAmount": 5490.0,
+       "reason": "Mengenrabatt ab 10 Stück",
+       "reasonCode": "95"
+      }
+     ],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    },
+    {
+     "id": "2",
+     "name": "Rollcontainer, 3 Schubladen",
+     "description": null,
+     "quantity": 10,
+     "unit": "C62",
+     "unitPrice": 189.0,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    }
+   ]
+  },
+  "stated": {
+   "lineTotal": "6831.00",
+   "allowanceTotal": null,
+   "chargeTotal": null,
+   "netTotal": "6831.00",
+   "vatTotal": "1297.89",
+   "vatAccountingCurrency": null,
+   "vatTotalInAccountingCurrency": null,
+   "grossTotal": "8128.89",
+   "prepaidAmount": null,
+   "roundingAmount": null,
+   "amountDue": "8128.89",
+   "vatBreakdown": [
+    {
+     "category": "S",
+     "rate": "19.00",
+     "taxableAmount": "6831.00",
+     "vatAmount": "1297.89",
+     "exemptionReason": null,
+     "exemptionReasonCode": null
+    }
+   ],
+   "lines": [
+    {
+     "netAmount": "4941.00",
+     "priceDiscount": null,
+     "allowances": [
+      {
+       "amount": "549.00"
+      }
+     ],
+     "charges": []
+    },
+    {
+     "netAmount": "1890.00",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    }
+   ],
+   "allowances": [],
+   "charges": []
+  },
+  "notMapped": [],
+  "validation": null
+ },
+ "24-rechnungsrabatt-cii": {
+  "syntax": "cii",
+  "documentKind": "invoice",
+  "source": {
+   "kind": "xml",
+   "attachment": null
+  },
+  "specificationId": "urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0",
+  "businessProcess": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+  "profile": "xrechnung",
+  "invoice": {
+   "invoiceNumber": "KR-2026-0330",
+   "issueDate": "2026-10-20",
+   "typeCode": "380",
+   "precedingInvoices": [],
+   "dueDate": "2026-11-03",
+   "deliveryDate": "2026-10-17",
+   "deliverTo": null,
+   "invoicePeriod": null,
+   "currency": "EUR",
+   "buyerReference": "4500012420",
+   "orderReference": null,
+   "contractReference": null,
+   "projectReference": null,
+   "despatchAdviceReference": null,
+   "attachments": [],
+   "note": "Fiktive Beispielrechnung von NormAPI, frei nutzbar (CC0). Namen, Nummern und Konten sind erfunden.",
+   "seller": {
+    "name": "Kaffeerösterei Muster KG",
+    "identifier": null,
+    "vatId": "DE345678912",
+    "taxNumber": null,
+    "electronicAddress": "rechnung@kaffee-muster.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Röstweg 7",
+     "city": "Bremen",
+     "postcode": "28195",
+     "country": "DE"
+    },
+    "contact": {
+     "name": "Tobias Muster",
+     "phone": "+49 421 555123",
+     "email": "tobias.muster@kaffee-muster.example"
+    },
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "buyer": {
+    "name": "Beispiel Handel AG",
+    "identifier": null,
+    "vatId": null,
+    "taxNumber": null,
+    "electronicAddress": "einkauf@beispiel-handel.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Handelsweg 3",
+     "city": "Hamburg",
+     "postcode": "20095",
+     "country": "DE"
+    },
+    "contact": null,
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "payment": {
+    "meansCode": "58",
+    "iban": "DE95290501010081234567",
+    "reference": "KR-2026-0330",
+    "meansText": null,
+    "accountName": null,
+    "bic": null,
+    "card": null,
+    "directDebit": null
+   },
+   "paymentTerms": "Zahlbar innerhalb von 14 Tagen ohne Abzug.",
+   "allowances": [
+    {
+     "amount": null,
+     "percent": 3,
+     "baseAmount": 1349.6,
+     "reason": "Treuerabatt",
+     "reasonCode": "95",
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null
+    }
+   ],
+   "charges": [],
+   "prepaidAmount": null,
+   "lines": [
+    {
+     "id": "1",
+     "name": "Siebträgermaschine Dualboiler",
+     "description": null,
+     "quantity": 1,
+     "unit": "C62",
+     "unitPrice": 1290.0,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    },
+    {
+     "id": "2",
+     "name": "Milchkännchen 0,6 l",
+     "description": null,
+     "quantity": 4,
+     "unit": "C62",
+     "unitPrice": 14.9,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    }
+   ]
+  },
+  "stated": {
+   "lineTotal": "1349.60",
+   "allowanceTotal": "40.49",
+   "chargeTotal": null,
+   "netTotal": "1309.11",
+   "vatTotal": "248.73",
+   "vatAccountingCurrency": null,
+   "vatTotalInAccountingCurrency": null,
+   "grossTotal": "1557.84",
+   "prepaidAmount": null,
+   "roundingAmount": null,
+   "amountDue": "1557.84",
+   "vatBreakdown": [
+    {
+     "category": "S",
+     "rate": "19.00",
+     "taxableAmount": "1309.11",
+     "vatAmount": "248.73",
+     "exemptionReason": null,
+     "exemptionReasonCode": null
+    }
+   ],
+   "lines": [
+    {
+     "netAmount": "1290.00",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    },
+    {
+     "netAmount": "59.60",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    }
+   ],
+   "allowances": [
+    {
+     "amount": "40.49"
+    }
+   ],
+   "charges": []
+  },
+  "notMapped": [],
+  "validation": null
+ },
+ "25-versandkosten-cii": {
+  "syntax": "cii",
+  "documentKind": "invoice",
+  "source": {
+   "kind": "xml",
+   "attachment": null
+  },
+  "specificationId": "urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0",
+  "businessProcess": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+  "profile": "xrechnung",
+  "invoice": {
+   "invoiceNumber": "BS-2026-07781",
+   "issueDate": "2026-10-20",
+   "typeCode": "380",
+   "precedingInvoices": [],
+   "dueDate": "2026-11-19",
+   "deliveryDate": "2026-10-17",
+   "deliverTo": null,
+   "invoicePeriod": null,
+   "currency": "EUR",
+   "buyerReference": "BV 2026-14 Kita Sonnenblume",
+   "orderReference": null,
+   "contractReference": null,
+   "projectReference": null,
+   "despatchAdviceReference": null,
+   "attachments": [],
+   "note": "Fiktive Beispielrechnung von NormAPI, frei nutzbar (CC0). Namen, Nummern und Konten sind erfunden.",
+   "seller": {
+    "name": "Muster Baustoffhandel GmbH",
+    "identifier": null,
+    "vatId": "DE802468024",
+    "taxNumber": null,
+    "electronicAddress": "rechnung@muster-baustoffe.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Kiesweg 3",
+     "city": "Düsseldorf",
+     "postcode": "40599",
+     "country": "DE"
+    },
+    "contact": {
+     "name": "Rita Muster",
+     "phone": "+49 211 7788990",
+     "email": "rita.muster@muster-baustoffe.example"
+    },
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "buyer": {
+    "name": "Beispiel Bau AG",
+    "identifier": null,
+    "vatId": "DE789123456",
+    "taxNumber": null,
+    "electronicAddress": "kreditoren@beispiel-bau.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Kranweg 1",
+     "city": "Düsseldorf",
+     "postcode": "40213",
+     "country": "DE"
+    },
+    "contact": null,
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "payment": {
+    "meansCode": "58",
+    "iban": "DE54300501100044556677",
+    "reference": "BS-2026-07781",
+    "meansText": null,
+    "accountName": null,
+    "bic": null,
+    "card": null,
+    "directDebit": null
+   },
+   "paymentTerms": "Zahlbar innerhalb von 30 Tagen ohne Abzug.",
+   "allowances": [],
+   "charges": [
+    {
+     "amount": 89.0,
+     "percent": null,
+     "baseAmount": null,
+     "reason": "Fracht, Lieferung frei Baustelle",
+     "reasonCode": "FC",
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null
+    }
+   ],
+   "prepaidAmount": null,
+   "lines": [
+    {
+     "id": "1",
+     "name": "Gipskartonplatten 12,5 mm",
+     "description": null,
+     "quantity": 120,
+     "unit": "MTK",
+     "unitPrice": 3.95,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    },
+    {
+     "id": "2",
+     "name": "Ständerwerk CW-Profil 50 mm, 2,60 m",
+     "description": null,
+     "quantity": 60,
+     "unit": "C62",
+     "unitPrice": 4.2,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    }
+   ]
+  },
+  "stated": {
+   "lineTotal": "726.00",
+   "allowanceTotal": null,
+   "chargeTotal": "89.00",
+   "netTotal": "815.00",
+   "vatTotal": "154.85",
+   "vatAccountingCurrency": null,
+   "vatTotalInAccountingCurrency": null,
+   "grossTotal": "969.85",
+   "prepaidAmount": null,
+   "roundingAmount": null,
+   "amountDue": "969.85",
+   "vatBreakdown": [
+    {
+     "category": "S",
+     "rate": "19.00",
+     "taxableAmount": "815.00",
+     "vatAmount": "154.85",
+     "exemptionReason": null,
+     "exemptionReasonCode": null
+    }
+   ],
+   "lines": [
+    {
+     "netAmount": "474.00",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    },
+    {
+     "netAmount": "252.00",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    }
+   ],
+   "allowances": [],
+   "charges": [
+    {
+     "amount": "89.00"
+    }
+   ]
+  },
+  "notMapped": [],
+  "validation": null
+ },
+ "33-innergemeinschaftliche-lieferung-cii": {
+  "syntax": "cii",
+  "documentKind": "invoice",
+  "source": {
+   "kind": "xml",
+   "attachment": null
+  },
+  "specificationId": "urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0",
+  "businessProcess": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+  "profile": "xrechnung",
+  "invoice": {
+   "invoiceNumber": "IG-2026-0117",
+   "issueDate": "2026-10-12",
+   "typeCode": "380",
+   "precedingInvoices": [],
+   "dueDate": "2026-11-11",
+   "deliveryDate": "2026-10-09",
+   "deliverTo": {
+    "name": "Beispiel Werkzeughandel GmbH, Lager Wels",
+    "locationId": null,
+    "locationIdScheme": null,
+    "address": {
+     "street": "Gewerbepark 12",
+     "city": "Wels",
+     "postcode": "4600",
+     "country": "AT"
+    }
+   },
+   "invoicePeriod": null,
+   "currency": "EUR",
+   "buyerReference": "Bestellung AT-4410",
+   "orderReference": null,
+   "contractReference": null,
+   "projectReference": null,
+   "despatchAdviceReference": null,
+   "attachments": [],
+   "note": "Lieferung nach Österreich; die Gelangensbestätigung liegt vor.\nFiktive Beispielrechnung von NormAPI, frei nutzbar (CC0). Namen, Nummern und Konten sind erfunden.",
+   "seller": {
+    "name": "Muster Maschinenbau GmbH",
+    "identifier": null,
+    "vatId": "DE891234567",
+    "taxNumber": null,
+    "electronicAddress": "export@muster-maschinenbau.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Werkstraße 30",
+     "city": "Chemnitz",
+     "postcode": "09111",
+     "country": "DE"
+    },
+    "contact": {
+     "name": "Peter Muster",
+     "phone": "+49 371 5678901",
+     "email": "peter.muster@muster-maschinenbau.example"
+    },
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "buyer": {
+    "name": "Beispiel Werkzeughandel GmbH",
+    "identifier": null,
+    "vatId": "ATU23456789",
+    "taxNumber": null,
+    "electronicAddress": "rechnungen@beispiel-werkzeughandel.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Hafenstraße 4",
+     "city": "Linz",
+     "postcode": "4020",
+     "country": "AT"
+    },
+    "contact": null,
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "payment": {
+    "meansCode": "58",
+    "iban": "DE68870500003501234567",
+    "reference": "IG-2026-0117",
+    "meansText": null,
+    "accountName": null,
+    "bic": "CHEKDE81XXX",
+    "card": null,
+    "directDebit": null
+   },
+   "paymentTerms": "Zahlbar innerhalb von 30 Tagen ohne Abzug.",
+   "allowances": [],
+   "charges": [],
+   "prepaidAmount": null,
+   "lines": [
+    {
+     "id": "1",
+     "name": "Fräskopf FK-80, montiert",
+     "description": null,
+     "quantity": 4,
+     "unit": "C62",
+     "unitPrice": 1280.0,
+     "vatCategory": "K",
+     "vatRate": 0,
+     "vatExemptionReason": "Steuerfreie innergemeinschaftliche Lieferung (§ 4 Nr. 1 Buchst. b UStG)",
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    },
+    {
+     "id": "2",
+     "name": "Spannzangen ER-32",
+     "description": null,
+     "quantity": 10,
+     "unit": "SET",
+     "unitPrice": 64.5,
+     "vatCategory": "K",
+     "vatRate": 0,
+     "vatExemptionReason": "Steuerfreie innergemeinschaftliche Lieferung (§ 4 Nr. 1 Buchst. b UStG)",
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    }
+   ]
+  },
+  "stated": {
+   "lineTotal": "5765.00",
+   "allowanceTotal": null,
+   "chargeTotal": null,
+   "netTotal": "5765.00",
+   "vatTotal": "0.00",
+   "vatAccountingCurrency": null,
+   "vatTotalInAccountingCurrency": null,
+   "grossTotal": "5765.00",
+   "prepaidAmount": null,
+   "roundingAmount": null,
+   "amountDue": "5765.00",
+   "vatBreakdown": [
+    {
+     "category": "K",
+     "rate": "0.00",
+     "taxableAmount": "5765.00",
+     "vatAmount": "0.00",
+     "exemptionReason": "Steuerfreie innergemeinschaftliche Lieferung (§ 4 Nr. 1 Buchst. b UStG)",
+     "exemptionReasonCode": null
+    }
+   ],
+   "lines": [
+    {
+     "netAmount": "5120.00",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    },
+    {
+     "netAmount": "645.00",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    }
+   ],
+   "allowances": [],
+   "charges": []
+  },
+  "notMapped": [],
+  "validation": null
+ },
+ "38-anlage-stundennachweis-cii": {
+  "syntax": "cii",
+  "documentKind": "invoice",
+  "source": {
+   "kind": "xml",
+   "attachment": null
+  },
+  "specificationId": "urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0",
+  "businessProcess": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+  "profile": "xrechnung",
+  "invoice": {
+   "invoiceNumber": "MB-2026-0091",
+   "issueDate": "2026-10-01",
+   "typeCode": "380",
+   "precedingInvoices": [],
+   "dueDate": "2026-10-15",
+   "deliveryDate": null,
+   "deliverTo": null,
+   "invoicePeriod": {
+    "startDate": "2026-09-01",
+    "endDate": "2026-09-30"
+   },
+   "currency": "EUR",
+   "buyerReference": "Kostenstelle 4200",
+   "orderReference": null,
+   "contractReference": null,
+   "projectReference": "P-2026-204",
+   "despatchAdviceReference": null,
+   "attachments": [
+    {
+     "id": "SN-2026-09",
+     "description": "Stundennachweis September 2026",
+     "filename": "stundennachweis-2026-09.pdf",
+     "mimeCode": "application/pdf",
+     "content": "JVBERi0xLjQKJeLjz9MKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA1OTUgODQyXSAvUmVzb3VyY2VzIDw8IC9Gb250IDw8IC9GMSA0IDAgUiAvRjIgNSAwIFIgPj4gPj4gL0NvbnRlbnRzIDYgMCBSID4+CmVuZG9iago0IDAgb2JqCjw8IC9UeXBlIC9Gb250IC9TdWJ0eXBlIC9UeXBlMSAvQmFzZUZvbnQgL0hlbHZldGljYSAvRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZyA+PgplbmRvYmoKNSAwIG9iago8PCAvVHlwZSAvRm9udCAvU3VidHlwZSAvVHlwZTEgL0Jhc2VGb250IC9IZWx2ZXRpY2EtQm9sZCAvRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZyA+PgplbmRvYmoKNiAwIG9iago8PCAvTGVuZ3RoIDEzNjYgPj4Kc3RyZWFtCkJUIC9GMiAxNiBUZiA1NiA3ODAgVGQgKFN0dW5kZW5uYWNod2VpcyBTZXB0ZW1iZXIgMjAyNikgVGogRVQKQlQgL0YxIDEwIFRmIDU2IDc2MCBUZCAoTXVzdGVyIEJlcmF0dW5nIEdtYkggZvxyIEJlaXNwaWVsIExvZ2lzdGlrIEdtYkgsIFByb2pla3QgUC0yMDI2LTIwNCkgVGogRVQKQlQgL0YyIDEwIFRmIDU2IDczMCBUZCAoRGF0dW0pIFRqIEVUCkJUIC9GMiAxMCBUZiAxNDAgNzMwIFRkIChU5HRpZ2tlaXQpIFRqIEVUCkJUIC9GMiAxMCBUZiA0ODAgNzMwIFRkIChTdHVuZGVuKSBUaiBFVAowLjYgdyA1NiA3MjQgbSA1NDAgNzI0IGwgUwpCVCAvRjEgMTAgVGYgNTYgNzA4IFRkICgwMS4wOS4yMDI2KSBUaiBFVApCVCAvRjEgMTAgVGYgMTQwIDcwOCBUZCAoV29ya3Nob3AgQW5mb3JkZXJ1bmdlbiBMYWdlcnZlcndhbHR1bmcpIFRqIEVUCkJUIC9GMSAxMCBUZiA1MDAgNzA4IFRkICg2LDApIFRqIEVUCkJUIC9GMSAxMCBUZiA1NiA2OTAgVGQgKDAzLjA5LjIwMjYpIFRqIEVUCkJUIC9GMSAxMCBUZiAxNDAgNjkwIFRkIChBbmFseXNlIERhdGVubW9kZWxsIHVuZCBTY2huaXR0c3RlbGxlbikgVGogRVQKQlQgL0YxIDEwIFRmIDUwMCA2OTAgVGQgKDcsNSkgVGogRVQKQlQgL0YxIDEwIFRmIDU2IDY3MiBUZCAoMDguMDkuMjAyNikgVGogRVQKQlQgL0YxIDEwIFRmIDE0MCA2NzIgVGQgKEtvbnplcHQgTWlncmF0aW9uLCBBYnN0aW1tdW5nIElUKSBUaiBFVApCVCAvRjEgMTAgVGYgNTAwIDY3MiBUZCAoNSw1KSBUaiBFVApCVCAvRjEgMTAgVGYgNTYgNjU0IFRkICgxMC4wOS4yMDI2KSBUaiBFVApCVCAvRjEgMTAgVGYgMTQwIDY1NCBUZCAoS29uemVwdCBNaWdyYXRpb24sIEF1c2FyYmVpdHVuZykgVGogRVQKQlQgL0YxIDEwIFRmIDUwMCA2NTQgVGQgKDgsMCkgVGogRVQKQlQgL0YxIDEwIFRmIDU2IDYzNiBUZCAoMTUuMDkuMjAyNikgVGogRVQKQlQgL0YxIDEwIFRmIDE0MCA2MzYgVGQgKFRlc3RwbGFuIHVuZCBBYm5haG1la3JpdGVyaWVuKSBUaiBFVApCVCAvRjEgMTAgVGYgNTAwIDYzNiBUZCAoNCwwKSBUaiBFVApCVCAvRjEgMTAgVGYgNTYgNjE4IFRkICgyMi4wOS4yMDI2KSBUaiBFVApCVCAvRjEgMTAgVGYgMTQwIDYxOCBUZCAoQWJzY2hsdXNzcHLkc2VudGF0aW9uIGJlaW0gS3VuZGVuKSBUaiBFVApCVCAvRjEgMTAgVGYgNTAwIDYxOCBUZCAoMywwKSBUaiBFVAowLjYgdyA1NiA2MTAgbSA1NDAgNjEwIGwgUwpCVCAvRjIgMTAgVGYgMTQwIDU5NCBUZCAoU3VtbWUpIFRqIEVUCkJUIC9GMiAxMCBUZiA0OTYgNTk0IFRkICgzNCwwKSBUaiBFVApCVCAvRjEgOCBUZiA1NiA1NjAgVGQgKEZpa3RpdmVyIEJlaXNwaWVsbmFjaHdlaXMgdm9uIE5vcm1BUEksIGZyZWkgbnV0emJhciBcKENDMFwpLikgVGogRVQKZW5kc3RyZWFtCmVuZG9iagp4cmVmCjAgNwowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwMTUgMDAwMDAgbiAKMDAwMDAwMDA2NCAwMDAwMCBuIAowMDAwMDAwMTIxIDAwMDAwIG4gCjAwMDAwMDAyNTcgMDAwMDAgbiAKMDAwMDAwMDM1NCAwMDAwMCBuIAowMDAwMDAwNDU2IDAwMDAwIG4gCnRyYWlsZXIKPDwgL1NpemUgNyAvUm9vdCAxIDAgUiA+PgpzdGFydHhyZWYKMTg3NAolJUVPRgo=",
+     "url": null
+    },
+    {
+     "id": "Leistungsbeschreibung P-2026-204",
+     "description": null,
+     "filename": null,
+     "mimeCode": null,
+     "content": null,
+     "url": "https://www.muster-beratung.example/projekte/p-2026-204/leistungsbeschreibung.pdf"
+    }
+   ],
+   "note": "Beratung im Projekt P-2026-204 laut Stundennachweis.\nFiktive Beispielrechnung von NormAPI, frei nutzbar (CC0). Namen, Nummern und Konten sind erfunden.",
+   "seller": {
+    "name": "Muster Beratung GmbH",
+    "identifier": null,
+    "vatId": "DE456789123",
+    "taxNumber": null,
+    "electronicAddress": "rechnung@muster-beratung.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Theresienstraße 21",
+     "city": "München",
+     "postcode": "80333",
+     "country": "DE"
+    },
+    "contact": {
+     "name": "Jana Muster",
+     "phone": "+49 89 3456789",
+     "email": "jana.muster@muster-beratung.example"
+    },
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "buyer": {
+    "name": "Beispiel Logistik GmbH",
+    "identifier": null,
+    "vatId": null,
+    "taxNumber": null,
+    "electronicAddress": "eingangsrechnungen@beispiel-logistik.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Am Speicher 7",
+     "city": "Bremen",
+     "postcode": "28217",
+     "country": "DE"
+    },
+    "contact": null,
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "payment": {
+    "meansCode": "58",
+    "iban": "DE98700500001234567890",
+    "reference": "MB-2026-0091",
+    "meansText": null,
+    "accountName": null,
+    "bic": null,
+    "card": null,
+    "directDebit": null
+   },
+   "paymentTerms": "Zahlbar innerhalb von 14 Tagen ohne Abzug.",
+   "allowances": [],
+   "charges": [],
+   "prepaidAmount": null,
+   "lines": [
+    {
+     "id": "1",
+     "name": "Beratung Projekt Lagerverwaltung",
+     "description": "Laut beiliegendem Stundennachweis SN-2026-09",
+     "quantity": 34,
+     "unit": "HUR",
+     "unitPrice": 120.0,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    }
+   ]
+  },
+  "stated": {
+   "lineTotal": "4080.00",
+   "allowanceTotal": null,
+   "chargeTotal": null,
+   "netTotal": "4080.00",
+   "vatTotal": "775.20",
+   "vatAccountingCurrency": null,
+   "vatTotalInAccountingCurrency": null,
+   "grossTotal": "4855.20",
+   "prepaidAmount": null,
+   "roundingAmount": null,
+   "amountDue": "4855.20",
+   "vatBreakdown": [
+    {
+     "category": "S",
+     "rate": "19.00",
+     "taxableAmount": "4080.00",
+     "vatAmount": "775.20",
+     "exemptionReason": null,
+     "exemptionReasonCode": null
+    }
+   ],
+   "lines": [
+    {
+     "netAmount": "4080.00",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    }
+   ],
+   "allowances": [],
+   "charges": []
+  },
+  "notMapped": [],
+  "validation": null
+ },
+ "40-grosshandel-artikelnummern-cii": {
+  "syntax": "cii",
+  "documentKind": "invoice",
+  "source": {
+   "kind": "xml",
+   "attachment": null
+  },
+  "specificationId": "urn:cen.eu:en16931:2017#compliant#urn:xeinkauf.de:kosit:xrechnung_3.0",
+  "businessProcess": "urn:fdc:peppol.eu:2017:poacc:billing:01:1.0",
+  "profile": "xrechnung",
+  "invoice": {
+   "invoiceNumber": "MB-2026-30871",
+   "issueDate": "2026-10-16",
+   "typeCode": "380",
+   "precedingInvoices": [],
+   "dueDate": "2026-11-15",
+   "deliveryDate": "2026-10-15",
+   "deliverTo": null,
+   "invoicePeriod": null,
+   "currency": "EUR",
+   "buyerReference": "BE-2026-0442",
+   "orderReference": "BE-2026-0442",
+   "contractReference": null,
+   "projectReference": null,
+   "despatchAdviceReference": "LS-2026-30512",
+   "attachments": [],
+   "note": "Fiktive Beispielrechnung von NormAPI, frei nutzbar (CC0). Namen, Nummern und Konten sind erfunden; die GTINs stammen aus dem Bereich 952, den GS1 für Beispiele vorhält.",
+   "seller": {
+    "name": "Muster Befestigungstechnik GmbH",
+    "identifier": null,
+    "vatId": "DE276543210",
+    "taxNumber": null,
+    "electronicAddress": "rechnung@muster-befestigung.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Gewerbestraße 21",
+     "city": "Köln",
+     "postcode": "50829",
+     "country": "DE"
+    },
+    "contact": {
+     "name": "Jan Beispiel",
+     "phone": "+49 221 3456789",
+     "email": "jan.beispiel@muster-befestigung.example"
+    },
+    "tradingName": null,
+    "registrationId": "HRB 104321",
+    "registrationIdScheme": null,
+    "legalInformation": "Sitz Köln, Amtsgericht Köln · Geschäftsführer: Jan Beispiel"
+   },
+   "buyer": {
+    "name": "Beispiel Haustechnik GmbH & Co. KG",
+    "identifier": null,
+    "vatId": null,
+    "taxNumber": null,
+    "electronicAddress": "eingangsrechnung@beispiel-haustechnik.example",
+    "electronicAddressScheme": "EM",
+    "address": {
+     "street": "Kölnstraße 88",
+     "city": "Bonn",
+     "postcode": "53111",
+     "country": "DE"
+    },
+    "contact": null,
+    "tradingName": null,
+    "registrationId": null,
+    "registrationIdScheme": null,
+    "legalInformation": null
+   },
+   "payment": {
+    "meansCode": "58",
+    "iban": "DE30370501980004455667",
+    "reference": "MB-2026-30871",
+    "meansText": null,
+    "accountName": null,
+    "bic": null,
+    "card": null,
+    "directDebit": null
+   },
+   "paymentTerms": "Zahlbar innerhalb von 30 Tagen ohne Abzug.",
+   "allowances": [],
+   "charges": [],
+   "prepaidAmount": null,
+   "lines": [
+    {
+     "id": "1",
+     "name": "Senkkopfschraube Torx 4 × 40 mm, verzinkt",
+     "description": null,
+     "quantity": 2500,
+     "unit": "C62",
+     "unitPrice": 12.5,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": "Geliefert in 5 Kartons zu je 500 Stück",
+     "sellerItemId": "SK-4040-VZ",
+     "buyerItemId": "100-4711",
+     "standardItemId": "9520123404048",
+     "standardItemIdScheme": "0160",
+     "listPrice": 15.0,
+     "baseQuantity": 100
+    },
+    {
+     "id": "2",
+     "name": "Nylondübel 8 × 40 mm",
+     "description": null,
+     "quantity": 1000,
+     "unit": "C62",
+     "unitPrice": 6.8,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": "DN-0840",
+     "buyerItemId": "100-4712",
+     "standardItemId": "9520123408404",
+     "standardItemIdScheme": "0160",
+     "listPrice": 8.0,
+     "baseQuantity": 100
+    },
+    {
+     "id": "3",
+     "name": "Akku-Bohrschrauber 18 V, zwei Akkus",
+     "description": null,
+     "quantity": 2,
+     "unit": "C62",
+     "unitPrice": 159.0,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": "AB-18V-02",
+     "buyerItemId": "200-0815",
+     "standardItemId": "9520123418021",
+     "standardItemIdScheme": "0160",
+     "listPrice": 189.0,
+     "baseQuantity": null
+    },
+    {
+     "id": "4",
+     "name": "Versandkosten",
+     "description": null,
+     "quantity": 1,
+     "unit": "C62",
+     "unitPrice": 9.9,
+     "vatCategory": "S",
+     "vatRate": 19,
+     "vatExemptionReason": null,
+     "allowances": [],
+     "charges": [],
+     "period": null,
+     "orderLineReference": null,
+     "note": null,
+     "sellerItemId": null,
+     "buyerItemId": null,
+     "standardItemId": null,
+     "standardItemIdScheme": null,
+     "listPrice": null,
+     "baseQuantity": null
+    }
+   ]
+  },
+  "stated": {
+   "lineTotal": "708.40",
+   "allowanceTotal": null,
+   "chargeTotal": null,
+   "netTotal": "708.40",
+   "vatTotal": "134.60",
+   "vatAccountingCurrency": null,
+   "vatTotalInAccountingCurrency": null,
+   "grossTotal": "843.00",
+   "prepaidAmount": null,
+   "roundingAmount": null,
+   "amountDue": "843.00",
+   "vatBreakdown": [
+    {
+     "category": "S",
+     "rate": "19.00",
+     "taxableAmount": "708.40",
+     "vatAmount": "134.60",
+     "exemptionReason": null,
+     "exemptionReasonCode": null
+    }
+   ],
+   "lines": [
+    {
+     "netAmount": "312.50",
+     "priceDiscount": "2.5",
+     "allowances": [],
+     "charges": []
+    },
+    {
+     "netAmount": "68.00",
+     "priceDiscount": "1.2",
+     "allowances": [],
+     "charges": []
+    },
+    {
+     "netAmount": "318.00",
+     "priceDiscount": "30.0",
+     "allowances": [],
+     "charges": []
+    },
+    {
+     "netAmount": "9.90",
+     "priceDiscount": null,
+     "allowances": [],
+     "charges": []
+    }
+   ],
+   "allowances": [],
+   "charges": []
+  },
+  "notMapped": [],
+  "validation": null
+ }
+}
